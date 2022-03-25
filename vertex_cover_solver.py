@@ -3,7 +3,6 @@ from re import S
 import numpy as np
 import random
 from tournament_genom import TournamentGenom
-import copy
 
 class VertexCoverSolver:
     def __init__(self, problem:np.array, rand_obj = np.random) -> None:

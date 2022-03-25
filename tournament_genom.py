@@ -6,6 +6,7 @@ class TournamentGenom:
         self.genom:np.array = genom
         self.uncover_cnt = None
         self.positive_cnt = None
+        self.combo_score = None
         self.rand = rand_obj
 
     @classmethod
@@ -13,15 +14,20 @@ class TournamentGenom:
         tmp = cls(other.getGenom(), rand_obj=other.rand)
         tmp.uncover_cnt = other.uncover_cnt
         tmp.positive_cnt = other.positive_cnt
+        tmp.combo_score = other.combo_score
 
         return tmp
 
 
     def __str__(self) -> str:
-        return f"{self.genom}, un: {self.uncover_cnt}, pc: {self.positive_cnt}"
+        return f"{self.genom}, un: {self.uncover_cnt}, pc: {self.positive_cnt}, combo: {self.combo_score}"
 
     def getGenom(self):
         return self.genom
+
+    def getScore(self):
+        self.validScores()
+        return self.combo_score
 
     def mutate(self, force:int = 1, p:float =.3):
         if self.rand.choice([0, 1], size=1, p=[1-p, p]):
@@ -34,27 +40,35 @@ class TournamentGenom:
     def fitProblem(self, problem):
         self.uncover_cnt = self.count_uncover(problem)
         self.positive_cnt = self.count_positives()
-
+        self.combo_score = self.combinedScore()
 
     def validScores(self):
-        if self.uncover_cnt is None or self.positive_cnt is None:
+        if self.uncover_cnt is None or self.positive_cnt is None or self.combo_score is None:
             raise Exception("TournamentGenom not fitted")
 
-
+    def combinedScore(self):
+        unc = self.uncover_cnt
+        pc =  self.positive_cnt
+        if np.sum(unc) != 0: 
+            return len(self.genom)*2 + unc
+        else: 
+            return pc
+    
     # "<" operator
     # if equal returns False
     def __lt__(self, other): 
-        self.validScores()
-        other.validScores()
-        un_s = self.score_fun(self.uncover_cnt, other.uncover_cnt)
-        pos_s = self.score_fun(self.positive_cnt, other.positive_cnt)
+        s_self = self.getScore()
+        s_other = other.getScore()
+        return s_self > s_other
+        # un_s = self.score_fun(self.uncover_cnt, other.uncover_cnt)
+        # pos_s = self.score_fun(self.positive_cnt, other.positive_cnt)
 
-        if un_s > 0: return False
-        elif un_s < 0: return True
-        else:
-            if pos_s > 0: return False
-            elif pos_s < 0: return True
-            else: return False
+        # if un_s > 0: return False
+        # elif un_s < 0: return True
+        # else:
+        #     if pos_s > 0: return False
+        #     elif pos_s < 0: return True
+        #     else: return False
 
     # ">" operator
     # if equal returns True

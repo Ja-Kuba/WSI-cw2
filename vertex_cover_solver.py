@@ -40,15 +40,21 @@ class VertexCoverSolver:
 
 
     def checkBest(self, tg1:TournamentGenom, tg2:TournamentGenom):
-        if tg1 > tg2: return tg1 
-        else: return tg2
+        if tg1 > tg2: 
+            return TournamentGenom.copy_init(tg1)
+        else: 
+            return TournamentGenom.copy_init(tg2)
 
 
-    def score_population(self, population):
-        best = population[0]
+    def score_population(self, population:list[TournamentGenom]):
+        scores = []
+        best = TournamentGenom.copy_init(population[0])
         for p in population:
             best = self.checkBest(best, p)
-
+            scores.append(p.getScore())
+        
+        #print(f"min_score: {min(scores)}")
+        #print(f"population best: {best}")
         return best
 
 
@@ -78,21 +84,24 @@ class VertexCoverSolver:
             new_population = self.tournament_selection(population, p_size=p_size)
             self.mutate_population(new_population, mutation_force, p_mutation)
             result = self.score_population(new_population)
-
+            population = new_population
+            
             if b_result > result: pass
             else:
-                b_result = result
+                b_result = TournamentGenom.copy_init(result)
                 res_found_iter = i
             
-            if i%100==0: print(f"iter {i}")
+            if i%100==0: 
+                print(f"iter {i}")
+                print(f"best_genome: {b_result}")
 
 
         print(f"best_genome: {b_result}")
         print(f"iter: {res_found_iter}")
         return all_populations
 
-
-    def printPopulation(self, population):
+    @classmethod
+    def printPopulation(cls, population):
         for i, p in enumerate(population):
             print(f"{p}[{i}]")
 
@@ -109,9 +118,11 @@ if __name__ == "__main__":
     t2 = TournamentGenom(np.array([1,0,0,0]))
     t1.positive_cnt = 2
     t1.uncover_cnt = 0
+    t1.combo_score = 0
 
     t2.positive_cnt = 3
     t2.uncover_cnt = 0
+    t2.combo_score = 1
 
     print(t1 > t2)
     #t1 = TournamentGenom(np.array([1,0,0,0]))

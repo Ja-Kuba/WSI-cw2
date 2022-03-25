@@ -21,11 +21,9 @@ def test(g, p, force, p_size, iter_cnt=700):
         print(f"p_mut: {p}\nforce={force}")
         start_t = perf_counter_ns()
         stats = v1.solve(iter_cnt=iter_cnt, p_size=p_size, p_mutation=p, mutation_force=force)
-        v1.printPopulation(stats[-1])
         end_t = round((perf_counter_ns() - start_t)/1e6, 2)
         print(f"time: {end_t}[ms]")
         print(f"-------------")
-        input("cont?")
 
 
 SEED=9
@@ -46,7 +44,7 @@ g1 = gg.to_np_array(gg1)
 
 print("start complete")
 for p in probs:
-    test(g0, p=p, force=2, p_size=400, iter_cnt=1000)
+    test(g0, p=p, force=2, p_size=400, iter_cnt=500)
 
 print("\n\nstart bipartite")
 for p in probs:

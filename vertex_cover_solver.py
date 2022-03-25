@@ -91,9 +91,9 @@ class VertexCoverSolver:
                 b_result = TournamentGenom.copy_init(result)
                 res_found_iter = i
             
-            if i%100==0: 
-                print(f"iter {i}")
-                print(f"best_genome: {b_result}")
+            # if i%100==0: 
+            #     print(f"iter {i}")
+            #     print(f"best_genome: {b_result}")
 
 
         print(f"best_genome: {b_result}")

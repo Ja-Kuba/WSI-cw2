@@ -50,6 +50,7 @@ class TournamentGenom:
         unc = self.uncover_cnt
         pc =  self.positive_cnt
         if np.sum(unc) != 0: 
+            #penalty for not cover all edges + uncovered count for compare 
             return len(self.genom)*2 + unc
         else: 
             return pc

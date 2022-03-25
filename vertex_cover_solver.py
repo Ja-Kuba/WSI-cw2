@@ -83,6 +83,9 @@ class VertexCoverSolver:
             else:
                 b_result = result
                 res_found_iter = i
+            
+            if i%100==0: print(f"iter {i}")
+
 
         print(f"best_genome: {b_result}")
         print(f"iter: {res_found_iter}")

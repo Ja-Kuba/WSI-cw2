@@ -54,11 +54,11 @@ class GraphGenerator:
     @classmethod
     def print_graph(cls, graph, filepath, marked=[]):
         color_map = []
-        for i, node in enumerate(graph):
+        for i, _ in enumerate(graph):
             if i < len(marked) and marked[i] == 1:
-                color_map.append('red') 
-            else:
                 color_map.append('green') 
+            else:
+                color_map.append('red') 
             
         nx.draw(graph, node_color = color_map,
                 node_size = 800,

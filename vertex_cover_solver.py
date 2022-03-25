@@ -77,7 +77,7 @@ class VertexCoverSolver:
     def solve(self, iter_cnt, p_size:int=200, mutation_force:int = 1, p_mutation:float = .3):
         all_populations = []
         population = self.init_population(p_size, self.res_size)
-        b_result = self.score_population(population)
+        b_result:TournamentGenom = self.score_population(population)
         res_found_iter = 0
         for i in range(iter_cnt):
             all_populations.append(population)
@@ -101,6 +101,7 @@ class VertexCoverSolver:
         return Stats(
             populations_list = all_populations,
             result = b_result.getGenom(),
+            best_score = b_result.getScore(),
             best_iter_found = all_populations
         )
 

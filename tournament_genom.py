@@ -49,12 +49,12 @@ class TournamentGenom:
         un_s = self.score_fun(self.uncover_cnt, other.uncover_cnt)
         pos_s = self.score_fun(self.positive_cnt, other.positive_cnt)
 
-        #if un_s > 0: return False
-        #elif un_s < 0: return True
-        #else:
-        #    if pos_s > 0: return False
-        #    elif pos_s < 0: return True
-        #    else: return False
+        if un_s > 0: return False
+        elif un_s < 0: return True
+        else:
+            if pos_s > 0: return False
+            elif pos_s < 0: return True
+            else: return False
 
     # ">" operator
     # if equal returns True

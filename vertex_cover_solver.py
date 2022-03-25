@@ -30,7 +30,7 @@ class VertexCoverSolver:
 
     def tournament_selection(self, population, p_size, k_size:int=2):
         new_population = []
-        for _ in range(1, p_size):
+        for _ in range(p_size):
             t_pair =  random.choices(population, k = k_size)
             tmp = self.get_winner(t_pair[0], t_pair[1])
             new_obj = TournamentGenom.copy_init(tmp)

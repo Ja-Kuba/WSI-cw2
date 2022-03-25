@@ -45,7 +45,7 @@ g1 = gg.to_np_array(gg1)
 
 print("start complete")
 for p in probs:
-    test(g0, p=p, force=2, p_size=1000)
+    test(g0, p=p, force=2, p_size=500, iter_cnt=2000)
 
 print("\n\nstart bipartite")
 for p in probs:

@@ -3,6 +3,7 @@ from re import S
 import numpy as np
 import random
 from tournament_genom import TournamentGenom
+from stats import Stats
 
 class VertexCoverSolver:
     def __init__(self, problem:np.array, rand_obj = np.random) -> None:
@@ -97,7 +98,11 @@ class VertexCoverSolver:
 
         print(f"best_genome: {b_result}")
         print(f"iter: {res_found_iter}")
-        return all_populations
+        return Stats(
+            populations_list = all_populations,
+            result = b_result.getGenom(),
+            best_iter_found = all_populations
+        )
 
     @classmethod
     def printPopulation(cls, population):

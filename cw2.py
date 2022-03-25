@@ -45,6 +45,10 @@ g0 = gg.to_np_array(gg0)
 g1 = gg.to_np_array(gg1)
 g2 = gg.to_np_array(gg2)
 
+v2 = VertexCoverSolver(g2)
+stats = v2.solve(iter_cnt=500, p_size=400, p_mutation=0.03, mutation_force=2)
+gg.print_graph(gg2, 'graph_ran_res.png', stats.result)
+
 print("//-*-*-*-*//start random//-*-*-*-*//")
 for p in probs:
     test(g2, p=p, force=2, p_size=400, iter_cnt=500)
